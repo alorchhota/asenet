@@ -92,6 +92,7 @@ class GencodeGTFReader:
         self.data = annotations
         
     def save(self, dest, ext='tsv'):
+        '''save the annotation data in a file'''
         sep = '\t'
         if ext=='csv':
             sep = ','
@@ -121,6 +122,11 @@ class GencodeGTFReader:
         return(maps)
     
     def get_gene_name_from_locus(self, n_chr, pos):
+        '''
+        get gene name of a locus.
+        If multiple genes found, take an exonic gene.
+        '''
+        
         matched_chr = self.data.loc[:,'chr'] == ('chr'+str(n_chr))
         matched_start = self.data.loc[:,'start'] <= pos
         matched_end = self.data.loc[:,'end'] >= pos

@@ -2,12 +2,12 @@ import os
 import pandas as pd
 
 ''' setting variables '''
-home_dir = '/home/ashis/work/github/asenet'
-gene_map_path = 'data/gencode.v19.genemap.txt'
-het_data_path = 'data/het.txt'
-ref_data_path = 'data/ref.txt'
-alt_data_path = 'data/alt.txt'
+home_dir = '/home/asaha6/github/asenet'
 tf_data_path = 'data/tf-nrg2538-s3.txt'
+gene_map_path = 'data/gencode.v19.genemap.txt'
+het_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/het.txt'
+ref_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/ref.txt'
+alt_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/alt.txt'
 gtex_genes_path = 'data/gtex_genes_used_in_eqtl_study.txt'
 gtex_gene_map_by_biomart_org_path = 'data/gtex_genes_map_biomart.org.txt'
 

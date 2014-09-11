@@ -5,14 +5,15 @@ import numpy as np
 #import matplotlib.pyplot as plt
 
 ''' setting variables '''
-home_dir = '/home/ashis/work/github/asenet'
+home_dir = '/home/asaha6/github/asenet'
 tf_data_path = 'data/tf-nrg2538-s3.txt'
-het_data_path = 'data/het.txt'
-ref_data_path = 'data/ref.txt'
-alt_data_path = 'data/alt.txt'
-expr_data_path = 'data/trans_data.txt'
 gencode_annot_path = 'data/gencode.v19.annotation.processed.gtf'
-ase_loc_path = 'data/ase_locus_annot.txt'
+het_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/het.txt'
+ref_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/ref.txt'
+alt_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/alt.txt'
+ase_loc_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/ase_locus_annot.txt'
+expr_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/data_used_for_eqtl_study/trans_data.txt'
+
 
 MIN_HET_SAMPLES = 30 #minimum number of samples heterogeneous at a locus
 
@@ -50,9 +51,9 @@ tfs_in_gtex = [t for t in tf.sym if t in gtex_genes]
 tf_expr_data = expr_data[tfs_in_gtex]
 
 ''' clear a few variables so that garbage collection can free memory '''
-#ref_data = None
-#alt_data = None
-#expr_data = None
+ref_data = None
+alt_data = None
+expr_data = None
 
 print('calculating correlations ...')
 ''' remove this line'''
