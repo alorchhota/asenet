@@ -1,5 +1,6 @@
 import pandas as pd
 import re
+import numpy as np
 
 class GencodeGTFReader:
     
@@ -118,5 +119,28 @@ class GencodeGTFReader:
         
         maps = {col1_values[i].split('.')[0]:col2_values[i] for i in range(len(col1_values))}
         return(maps)
+    
+    def get_gene_name_from_locus(self, n_chr, pos):
+        matched_chr = self.data.loc[:,'chr'] == ('chr'+str(n_chr))
+        matched_start = self.data.loc[:,'start'] <= pos
+        matched_end = self.data.loc[:,'end'] >= pos
+        
+        matched = matched_chr & matched_start & matched_end
+        matched_index = np.where(matched)
+        matched_entities = self.data.loc[self.data.index.values[matched_index], ['gene_name', 'feature']]
+        
+        gene_names = set(matched_entities.loc[:,'gene_name'])
+        
+        if len(gene_names) == 0:
+            return 'NA'
+        elif len(gene_names) == 1:
+            return gene_names.pop()
+        else:
+            is_exon = matched_entities.loc[:,'feature'] == 'exon'
+            if sum(is_exon) > 0:
+                exon_index = np.where(is_exon)
+                exon_gene = matched_entities.iloc[exon_index[0], 0]
+                return exon_gene
+            return gene_names.pop()
         
     
