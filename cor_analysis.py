@@ -40,6 +40,12 @@ alt_data = pd.read_table(alt_data_path, sep=' ', header=None, index_col=0)
 expr_data = pd.read_table(expr_data_path, sep='\t', header=0, index_col=0)
 ase_loc_ann_data = pd.read_table(ase_loc_path, sep=' ', header=0, index_col=None)
 
+print('rearrange data to have same sample-order')
+ref_data = ref_data.loc[het_data.index, :]
+alt_data = alt_data.loc[het_data.index, :]
+expr_data = expr_data.loc[het_data.index, :]
+
+
 print('calculating ase ...')
 ase_data = abs(ref_data / (ref_data + alt_data) - 0.5)
 ase_data = ase_data.replace(np.Inf, 0)
@@ -70,9 +76,9 @@ for tfg in tfs_in_gtex:
         if n_het_samples < MIN_HET_SAMPLES:
             continue
         tf_ase_expr = [(e,a) for h,e,a 
-                       in zip(het_data.loc[het_data.index, het_data.columns[li]], 
-                              tf_expr_data.loc[het_data.index, tfg],
-                              ase_data.loc[het_data.index,ase_data.columns[li]]) 
+                       in zip(het_data.loc[:, het_data.columns[li]], 
+                              tf_expr_data.loc[:, tfg],
+                              ase_data.loc[:,ase_data.columns[li]]) 
                        if h==1]
         cor = stats.spearmanr(tf_ase_expr)
         if cor[1] < p_thresh:
