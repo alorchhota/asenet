@@ -45,8 +45,8 @@ with open(tfs_loci_dest_path, 'w') as outFile:
 
 print('calculating correlations ...')
 
-minLocusIndex = 3000
-maxLocusIndex = 3010  # n_loc
+minLocusIndex = 3010
+maxLocusIndex = 5000  # n_loc
 
 for li in range(minLocusIndex, maxLocusIndex):
     if li % 100 == 0:
