@@ -138,14 +138,14 @@ class GencodeGTFReader:
         gene_names = set(matched_entities.loc[:,'gene_name'])
         
         if len(gene_names) == 0:
-            return 'NA'
+            return '-'
         elif len(gene_names) == 1:
             return gene_names.pop()
         else:
             is_exon = matched_entities.loc[:,'feature'] == 'exon'
             if sum(is_exon) > 0:
                 exon_index = np.where(is_exon)
-                exon_gene = matched_entities.iloc[exon_index[0], 0]
+                exon_gene = matched_entities.iloc[exon_index[0][0], 0]
                 return exon_gene
             return gene_names.pop()
         
