@@ -4,7 +4,7 @@ import pandas as pd
 ''' setting variables '''
 home_dir = '/home/asaha6/github/asenet'
 tf_list_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/tf_nrg2538/tf_processed.txt'
-expr_data_path = 'data/trans_data.txt'
+expr_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/data_used_for_eqtl_study/trans_data.txt'
 sample_label_path = 'data/sample_labels.txt'
 
 tf_expr_data_dest_path = 'results/tf_expr_data.txt'
