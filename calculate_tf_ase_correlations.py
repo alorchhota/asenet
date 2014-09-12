@@ -15,6 +15,7 @@ MIN_HET_SAMPLES = 30 #minimum number of samples heterogeneous at a locus
 
 curTime = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
 tfs_loci_dest_path = 'results/significant_tfs_' + curTime + '.txt'
+test_statistics_dest_path = 'results/test_statistics_' + curTime + '.txt'
 
 # set working directory
 os.chdir(home_dir)
@@ -57,13 +58,22 @@ for li in range(minLocusIndex, maxLocusIndex):
     het_index = np.where(het_data.iloc[:,li]==1)[0]
     ase_expr = ase_data.iloc[het_index,li]
     
+    # store test statistics
+    test_statistics = []
+    
     for tfi in range(n_tfs):
         tfg = tfs[tfi]
         tf_expr = tf_expr_data.iloc[het_index, tfi]
         
         cor = stats.spearmanr(tf_expr, ase_expr)
+        test_statistics.append((tfg, li, cor[0], cor[1]))
         if cor[1] <= p_thresh:
             with open(tfs_loci_dest_path, 'a') as outFile:
                 toPrint = [tfg, li, n_het_samples[li], cor[0], cor[1]]
                 outFile.write('\t'.join([str(item) for item in toPrint]) + '\n')
                 print(':::: ' + str(li) + ',' + tfg)
+
+    with open(test_statistics_dest_path, 'a') as statOutFile:
+        statOutFile.write( '\n'.join('\t'.join([str(item) for item in tup]) for tup in test_statistics))
+        statOutFile.write( '\n')
+    
