@@ -2,6 +2,7 @@ import os
 import pandas as pd
 from scipy import stats
 import numpy as np
+import time
 
 ''' setting variables '''
 home_dir = '/home/asaha6/github/asenet'
@@ -12,7 +13,8 @@ tf_expr_data_path = 'data/tf_expr_data.txt'
 
 MIN_HET_SAMPLES = 30 #minimum number of samples heterogeneous at a locus
 
-tfs_loci_dest_path = 'results/significant_tfs.txt'
+curTime = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
+tfs_loci_dest_path = 'results/significant_tfs_' + curTime + '.txt'
 
 # set working directory
 os.chdir(home_dir)
@@ -42,7 +44,10 @@ with open(tfs_loci_dest_path, 'w') as outFile:
 
 print('calculating correlations ...')
 
-for li in range(n_loc):
+minLocusIndex = 0
+maxLocusIndex = 10  # n_loc
+
+for li in range(minLocusIndex, maxLocusIndex):
     if li % 100 == 0:
         print(li)
     
