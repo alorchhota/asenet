@@ -3,9 +3,9 @@ import pandas as pd
 
 ''' setting variables '''
 home_dir = '/home/asaha6/github/asenet'
-het_data_path = 'data/het.txt'
-ref_data_path = 'data/ref.txt'
-alt_data_path = 'data/alt.txt'
+het_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/het.txt'
+ref_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/ref.txt'
+alt_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/alt.txt'
 
 ase_data_dest_path = 'results/ase.txt'
 
