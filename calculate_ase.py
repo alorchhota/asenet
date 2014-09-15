@@ -8,6 +8,9 @@ ref_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/ref.txt
 alt_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/alt.txt'
 
 ase_data_dest_path = 'results/ase.txt'
+validity_data_dest_path ='results/ase_validity.txt'
+
+MIN_READS = 20 
 
 # set working directory
 os.chdir(home_dir)
@@ -29,3 +32,8 @@ ase_data = abs(ref_data / total_reads - 0.5)
 
 print('saving ase data ...')
 ase_data.to_csv(ase_data_dest_path, sep='\t', index=True, header=False)
+
+print('creating ase validity matrix ...')
+ase_validity = het_data * (total_reads >= MIN_READS)
+ase_validity.to_csv(validity_data_dest_path, sep='\t', index=True, header=False)
+
