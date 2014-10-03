@@ -6,8 +6,8 @@ home_dir = '/home/asaha6/github/asenet'
 gencode_annot_path = 'data/gencode.v19.annotation.processed.gtf'
 ase_loc_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/ase_locus_annot.txt'
 
-significant_tfs_path = 'results/TF-ASE-Correlation-2014-09-12/significant_tfs_bonferroni_corrected.txt'
-annotated_significant_tfs_dest_path = 'results/significant_tfs_bonferroni_corrected_with_name.txt'
+significant_tfs_path = 'results/test_statistics_2014-09-15_13-06-21_fdr_bh.txt'
+annotated_significant_tfs_dest_path = 'results/significant_tf_ase_fdr_bh.txt'
 
 
 # set working directory
@@ -34,5 +34,5 @@ locus_genes = [gen_annot.get_gene_name_from_locus(
                for index, tup in sig_tf_data.iterrows()]
  
 print('saving significant tf with locus names ...')
-sig_tf_data['aseqtl'] = locus_genes
+sig_tf_data['gene'] = locus_genes
 sig_tf_data.to_csv(path_or_buf=annotated_significant_tfs_dest_path, sep='\t', header=True, index=False)
