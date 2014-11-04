@@ -72,3 +72,4 @@ for tf_ase_row in tf_ase_data.iterrows():
     with open(statistic_dest_path, 'a') as statOutFile:
         statOutFile.write( '\n'.join('\t'.join([str(item) for item in tup]) for tup in test_statistics))
         statOutFile.write( '\n')
+
