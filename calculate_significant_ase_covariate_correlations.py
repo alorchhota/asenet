@@ -47,10 +47,16 @@ with open(statistic_dest_path, 'w') as outFile:
 print('calculating correlations ...')
    
 # iterate each significant ase
+handled_loci = []
 for tf_ase_row in tf_ase_data.iterrows():
     locus_idx = tf_ase_row[1]['locus_index']
     gene = tf_ase_row[1]['gene']
     tf_ase_r = tf_ase_row[1]['r']
+    #
+    # check if ase is already handled
+    if locus_idx in handled_loci:
+    	continue
+    handled_loci.append(locus_idx)
     # 
     # generate valid ase data
     valid_idx = np.where(validity_data.iloc[:,locus_idx]==1)[0]
