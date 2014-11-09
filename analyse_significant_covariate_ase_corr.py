@@ -10,12 +10,12 @@ import matplotlib.pyplot as plt
 
 ''' setting variables '''
 home_dir = '/home/asaha6/github/asenet'
-cov_ase_corr_data_path = 'results/COV-ASE-Correlations-2014-11-05/ase_biological_covariate_corr.txt'
-#cov_ase_corr_data_path = 'results/COV-ASE-Correlations-2014-11-05/ase_technical_covariate_corr.txt'
+#cov_ase_corr_data_path = 'results/COV-ASE-Correlations-2014-11-05/ase_biological_covariate_corr.txt'
+cov_ase_corr_data_path = 'results/COV-ASE-Correlations-2014-11-05/ase_technical_covariate_corr.txt'
 
 # output file
-dest_fig_path = 'results/cov_bio_ase_corr_hist.png'
-#dest_fig_path = 'results/cov_tech_ase_corr_hist.png'
+#dest_fig_path = 'results/cov_bio_ase_corr_hist.png'
+dest_fig_path = 'results/cov_tech_ase_corr_hist.png'
 dest_max_path = 'results/max_cov_corr_per_ase_gene.txt'
 
 # set working directory
