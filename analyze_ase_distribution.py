@@ -37,7 +37,7 @@ valid_ase_vals = [];
 for locus_idx in range(ase_data.shape[1]):
     # generate valid ase data
     if locus_idx % 1000 == 0:
-        print(str(locus_idx) + ' of ' + ase_data.shape[1])
+        print(str(locus_idx) + ' of ' + str(ase_data.shape[1]))
     valid_idx = np.where(validity_data.iloc[:,locus_idx]==1)[0]
     ase_vals = ase_data.iloc[valid_idx,locus_idx]
     valid_ase_vals = valid_ase_vals + list(ase_vals);
