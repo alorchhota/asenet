@@ -17,12 +17,12 @@ from scipy import stats
 
 ''' setting variables '''
 home_dir = '/home/asaha6/github/asenet'
-#cov_ase_corr_data_path = 'results/COV-ASE-Correlations-2014-11-05/sig_ase_biological_covariate_corr.txt'
-cov_ase_corr_data_path = 'results/COV-ASE-Correlations-2014-11-05/sig_ase_technical_covariate_corr.txt'
+cov_ase_corr_data_path = 'results/COV-ASE-Correlations-2014-11-05/sig_ase_biological_covariate_corr.txt'
+#cov_ase_corr_data_path = 'results/COV-ASE-Correlations-2014-11-05/sig_ase_technical_covariate_corr.txt'
 
 # output file
-#dest_fig_path = 'results/cov_bio_sig_ase_corr_hist.png'
-dest_fig_path = 'results/cov_tech_sig_ase_corr_hist.png'
+dest_fig_path = 'results/cov_bio_sig_ase_corr_hist.png'
+#dest_fig_path = 'results/cov_tech_sig_ase_corr_hist.png'
 
 # set working directory
 os.chdir(home_dir)
@@ -41,7 +41,7 @@ r_vals_tf_ase_neg = [ row['r']  for idx, row in corr_data.iterrows() if row['tf_
 
 xlimit = (-0.75,0.75)
 xticks = np.arange(xlimit[0], xlimit[1]+0.1, 0.25)
-ylimit = 300
+ylimit = 6.5
 nbins = 20
 
 plt.subplot(2, 2, 1)
@@ -62,7 +62,7 @@ plt.title('All r (zoomed)')
 #plt.xlabel('r')
 
 plt.subplot(2, 2, 2)
-h = plt.hist(r_vals_tf_ase_pos, bins=nbins)
+h = plt.hist(r_vals_tf_ase_pos, bins=nbins, normed=True)
 plt.axis('auto')
 plt.xlim(xlimit)
 plt.ylim((0,ylimit))
@@ -71,13 +71,14 @@ plt.title('For positive tf-ase corr')
 #plt.xlabel('r')
 
 plt.subplot(2, 2, 4)
-h = plt.hist(r_vals_tf_ase_neg, bins=nbins)
+h = plt.hist(r_vals_tf_ase_neg, bins=nbins, normed=True)
 plt.axis('auto')
 plt.xlim(xlimit)
 plt.ylim((0,ylimit))
 plt.xticks(xticks)
 plt.title('For negative tf-ase corr')
 #plt.xlabel('r')
+
 
 plt.suptitle('Histogram of covariate-asesite r')
 plt.savefig(dest_fig_path)
