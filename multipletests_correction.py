@@ -5,13 +5,13 @@ import numpy as np
 
 ''' setting variables '''
 home_dir = '/home/asaha6/github/asenet'
-test_statistics_path = 'results/test_statistics_2014-09-15_13-06-21.txt'
+test_statistics_path = 'results/test_statistics_noabs_2014-12-15_16-38-11.txt'
 
 # method = 'fdr_bh' or 'bonferroni'
 method_param = 'bonferroni'
 alpha = 0.05;
 
-multitest_corrected_test_statistics_dest_path = 'results/test_statistics_2014-09-15_13-06-21_' + method_param + '.txt'
+multitest_corrected_test_statistics_dest_path = 'results/test_statistics_noabs_2014-12-15_16-38-11_' + method_param + '.txt'
 
 
 # set working directory

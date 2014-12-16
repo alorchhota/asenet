@@ -5,17 +5,18 @@ import numpy as np
 import time
 
 ''' setting variables '''
+abs_suffix = '_noabs' # '': ase = abs(#ref/#total - 0.5), '_nobas': ase = #ref/#total - 0.5
 home_dir = '/home/asaha6/github/asenet'
-validity_data_path = 'data/ase_validity.txt'
-ase_data_path = 'data/ase.txt'
+validity_data_path = 'data/ase_validity' + abs_suffix + '.txt'
+ase_data_path = 'data/ase' + abs_suffix + '.txt'
 tf_expr_data_path = 'data/tf_expr_data.txt'
 
 
 MIN_VALID_SAMPLES = 30 #minimum number of valid samples at a locus
 
 curTime = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
-tfs_loci_dest_path = 'results/significant_tfs_' + curTime + '.txt'
-test_statistics_dest_path = 'results/test_statistics_' + curTime + '.txt'
+tfs_loci_dest_path = 'results/significant_tfs' + abs_suffix + '_' + curTime + '.txt'
+test_statistics_dest_path = 'results/test_statistics' + abs_suffix + '_' + curTime + '.txt'
 
 # set working directory
 os.chdir(home_dir)

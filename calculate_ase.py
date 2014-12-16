@@ -7,8 +7,8 @@ het_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/het.txt
 ref_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/ref.txt'
 alt_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/alt.txt'
 
-ase_data_dest_path = 'results/ase.txt'
-validity_data_dest_path ='results/ase_validity.txt'
+ase_data_dest_path = 'results/ase_noabs.txt'
+validity_data_dest_path ='results/ase_validity_noabs.txt'
 
 MIN_READS = 20 
 
@@ -28,7 +28,7 @@ print('calculating ase ...')
 delta = 0.01
 total_reads = ref_data + alt_data
 total_reads = total_reads.replace(0, delta) # to avoid division by zero
-ase_data = abs(ref_data / total_reads - 0.5)
+ase_data = ref_data / total_reads - 0.5
 
 print('saving ase data ...')
 ase_data.to_csv(ase_data_dest_path, sep='\t', index=True, header=False)
