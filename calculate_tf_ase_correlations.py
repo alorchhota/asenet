@@ -5,9 +5,9 @@ import numpy as np
 import time
 
 ''' setting variables '''
-abs_suffix = '_noabs' # '': ase = abs(#ref/#total - 0.5), '_nobas': ase = #ref/#total - 0.5
+abs_suffix = '_pseudo' # '': ase = abs(#ref/#total - 0.5), '_nobas': ase = #ref/#total - 0.5
 home_dir = '/home/asaha6/github/asenet'
-validity_data_path = 'data/ase_validity' + abs_suffix + '.txt'
+validity_data_path = 'data/ase_validity.txt'
 ase_data_path = 'data/ase' + abs_suffix + '.txt'
 tf_expr_data_path = 'data/tf_expr_data.txt'
 

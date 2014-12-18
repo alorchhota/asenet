@@ -6,7 +6,7 @@ import numpy as np
 home_dir = '/home/asaha6/github/asenet'
 
 # input
-sig_tf_ase_path = 'results/TF-ASE-Correlation-2014-12-15/significant_tf_ase_fdr_bh.txt'
+sig_tf_ase_path = 'results/TF-ASE-Correlation-2014-12-17/significant_tf_ase_fdr_bh.txt'
 sig_tf_tf_path = 'results/TF-TF-Correlations-2014-09-18/tf_tf_test_statistics_2014-09-18_11-28-38_fdr_bh.txt'
 
 # output

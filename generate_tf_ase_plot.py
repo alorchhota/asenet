@@ -14,9 +14,9 @@ validity_data_path = 'data/ase_validity' + abs_suffix + '.txt'
 ase_data_path = 'data/ase' + abs_suffix + '.txt'
 ref_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/ref.txt'
 alt_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/alt.txt'
-test_statistics_path = 'results/TF-ASE-Correlation-2014-09-16/significant_tf_ase_fdr_bh.txt'
+test_statistics_path = 'results/TF-ASE-Correlation-2014-12-17/significant_tf_ase_bonferroni.txt'
 
-fig_dest_dir = 'results/TF-ASE-Correlation-2014-09-16/fig/'
+fig_dest_dir = 'results/TF-ASE-Correlation-2014-12-17/fig/'
 
 # set working directory
 os.chdir(home_dir)
