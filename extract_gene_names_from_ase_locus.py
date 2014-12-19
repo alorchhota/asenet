@@ -6,7 +6,7 @@ home_dir = '/home/asaha6/github/asenet'
 gencode_annot_path = 'data/gencode.v19.annotation.processed.gtf'
 ase_loc_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/ase_locus_annot.txt'
 
-significant_tfs_path = 'results/test_statistics_pseudo_2014-12-17_15-55-45_fdr_bh.txt'
+significant_tfs_path = 'results/test_statistics_pseudo_2014-12-19_00-02-51_fdr_bh.txt'
 annotated_significant_tfs_dest_path = 'results/significant_tf_ase_fdr_bh.txt'
 
 
