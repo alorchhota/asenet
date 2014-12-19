@@ -25,12 +25,15 @@ merged_data = pd.merge(ase_loc_ann_data, bias_data, left_on=['chr', 'asePos'],  
 # check if every ase_locus is present in merged data
 if merged_data.shape[0] != ase_loc_ann_data.shape[0]:
     print('some ase loci do not have bias information.')
+else:
+    print('creating bias information ...')
+    # hashing first to ensure data in the exact same order as ase loci
+    ase_bias_dict = {str(int(row[1]['chr'])) + ':' + str(int(row[1]['asePos'])) : int(row[1]['Percentage_ref'] == 0.5) for row in merged_data.iterrows()}
+    ase_bias = [str(int(ase_bias_dict[str(int(row[1]['chr'])) + ':' + str(int(row[1]['asePos']))])) for row in ase_loc_ann_data.iterrows()]
 
-print('saving bias information ...')
-merged_data['bias'] = merged_data.loc[:,['Percentage_ref']] == 0.5
-ase_bias = [str(int(b[1]['bias'])) for b in merged_data.iterrows()]
-text = '\n'.join(ase_bias)
-with open(bias_dest_path, 'w') as outFile:
-    outFile.write(text)
+    print('saving bias information ...')
+    text = '\n'.join(ase_bias)
+    with open(bias_dest_path, 'w') as outFile:
+        outFile.write(text)
 
-print('Done. See output in File: ' + bias_dest_path)
+    print('Done. See output in File: ' + bias_dest_path)
