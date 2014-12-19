@@ -28,7 +28,7 @@ if merged_data.shape[0] != ase_loc_ann_data.shape[0]:
 else:
     print('creating bias information ...')
     # hashing first to ensure data in the exact same order as ase loci
-    ase_bias_dict = {str(int(row[1]['chr'])) + ':' + str(int(row[1]['asePos'])) : int(row[1]['Percentage_ref'] == 0.5) for row in merged_data.iterrows()}
+    ase_bias_dict = {str(int(row[1]['chr'])) + ':' + str(int(row[1]['asePos'])) : int(row[1]['Percentage_ref'] != 0.5) for row in merged_data.iterrows()}
     ase_bias = [str(int(ase_bias_dict[str(int(row[1]['chr'])) + ':' + str(int(row[1]['asePos']))])) for row in ase_loc_ann_data.iterrows()]
 
     print('saving bias information ...')
