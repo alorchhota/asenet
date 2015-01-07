@@ -16,7 +16,19 @@ mv $validdest $validdata
 
 # calculating tf-ase correlations
 minsamples=30
-python calculate_tf_ase_correlations.py -home $homedir -asedata $asedata -validdata $validdata -minsamples $minsamples
+statdest='results/test_statistics.txt'
+#python calculate_tf_ase_correlations.py -home $homedir -asedata $asedata -validdata $validdata -minsamples $minsamples -statdest $statdest
+
+# fdr correction
+statdata=$statdest
+method='fdr_bh'
+sigdest='results/test_statistics_fdr_bh.txt'
+python multipletests_correction.py -home $homedir -statdata $statdata -method $method -sigdest $sigdest
+
+# bonferroni correction
+method='bonferroni'
+sigdest='results/test_statistics_bonferroni.txt'
+python multipletests_correction.py -home $homedir -statdata $statdata -method $method -sigdest $sigdest
 
 #outFile='results/out_'$(date +%Y-%m-%d_%H-%M-%S)'.txt'
 #/home/asaha6/programs/anaconda/bin/python  calculate_tf_ase_correlations.py > $outFile
