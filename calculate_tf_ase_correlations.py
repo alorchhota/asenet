@@ -2,21 +2,43 @@ import os
 import pandas as pd
 from scipy import stats
 import numpy as np
-import time
+import argparse
+
+''' argument parsing '''
+print('parsing arguments ...')
+parser = argparse.ArgumentParser()
+parser.add_argument('-home',
+                    help='home directory',
+                    default='.', )
+parser.add_argument('-validdata',
+                    help='path to validity data file. Only valid loci are included in the analysis.',
+                    default='data/ase_validity.txt')
+parser.add_argument('-asedata',
+                    help='path to ase data file.',
+                    default='data/ase.txt')
+parser.add_argument('-tfdata',
+                    help='path to TF expression data file.',
+                    default='data/tf_expr_data.txt')
+parser.add_argument('-statdest',
+                    help='output path to test statistic.',
+                    default='results/test_statistics.txt')
+parser.add_argument('-sigdest',
+                    help='output path to significant tf-asesite pairs.',
+                    default='results/significant_tfs.txt')
+parser.add_argument('-minsamples',
+                    help='minimum number of valid samples per ase site.',
+                    type = int,
+                    default=30)
+args = parser.parse_args()
 
 ''' setting variables '''
-abs_suffix = '_pseudo' # '': ase = abs(#ref/#total - 0.5), '_nobas': ase = #ref/#total - 0.5
-home_dir = '/home/asaha6/github/asenet'
-validity_data_path = 'data/ase_validity.txt'
-ase_data_path = 'data/ase' + abs_suffix + '.txt'
-tf_expr_data_path = 'data/tf_expr_data.txt'
-
-
-MIN_VALID_SAMPLES = 30 #minimum number of valid samples at a locus
-
-curTime = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
-tfs_loci_dest_path = 'results/significant_tfs' + abs_suffix + '_' + curTime + '.txt'
-test_statistics_dest_path = 'results/test_statistics' + abs_suffix + '_' + curTime + '.txt'
+home_dir = args.home
+validity_data_path = args.validdata
+ase_data_path = args.asedata
+tf_expr_data_path = args.tfdata
+MIN_VALID_SAMPLES = args.minsamples
+tfs_loci_dest_path = args.sigdest
+test_statistics_dest_path = args.statdest
 
 # set working directory
 os.chdir(home_dir)
@@ -53,9 +75,15 @@ print('calculating correlations ...')
 minLocusIndex = 0
 maxLocusIndex = n_loc
 
+test_statistics = []
+
 for li in range(minLocusIndex, maxLocusIndex):
-    if li % 100 == 0:
+    if li>0 and li % 100 == 0:
         print(li)
+        with open(test_statistics_dest_path, 'a') as statOutFile:
+            statOutFile.write( '\n'.join('\t'.join([str(item) for item in tup]) for tup in test_statistics))
+            statOutFile.write( '\n')
+        test_statistics = []
     
     if n_valid_samples[li] < MIN_VALID_SAMPLES:
         continue
@@ -64,8 +92,6 @@ for li in range(minLocusIndex, maxLocusIndex):
     ase_expr = ase_data.iloc[het_index,li]
     
     # store test statistics
-    test_statistics = []
-    
     for tfi in range(n_tfs):
         tfg = tfs[tfi]
         tf_expr = tf_expr_data.iloc[het_index, tfi]
@@ -78,7 +104,9 @@ for li in range(minLocusIndex, maxLocusIndex):
                 outFile.write('\t'.join([str(item) for item in toPrint]) + '\n')
                 print(':::: ' + str(li) + ',' + tfg)
 
+if len(test_statistics) > 0:
     with open(test_statistics_dest_path, 'a') as statOutFile:
         statOutFile.write( '\n'.join('\t'.join([str(item) for item in tup]) for tup in test_statistics))
         statOutFile.write( '\n')
     
+
