@@ -1,19 +1,56 @@
 import os
 import pandas as pd
 import numpy as np
+import argparse
+
+''' argument parsing '''
+print('parsing arguments ...')
+parser = argparse.ArgumentParser()
+parser.add_argument('-home',
+                    help='home directory',
+                    default='.', )
+parser.add_argument('-hetdata',
+                    help='path to heterogeneous data file. Only heterogeneous loci are included in the analysis.',
+                    default='/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/het.txt')
+parser.add_argument('-biasdata',
+                    help='path to bias data file. Biased loci are excluded from the analysis.',
+                    default='data/bias.txt')
+parser.add_argument('-refdata',
+                    help='path to reference read counts data file.',
+                    default='/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/ref.txt')
+parser.add_argument('-altdata',
+                    help='path to alternate read counts data file.',
+                    default='/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/alt.txt')
+parser.add_argument('-asedest',
+                    help='output path to calculated ase.',
+                    default='results/ase.txt')
+parser.add_argument('-validdest',
+                    help='output path to ase validity.',
+                    default='results/ase_validity.txt')
+parser.add_argument('-minreads',
+                    help='minimum number of reads per ase site.',
+                    type = int,
+                    default=20)
+parser.add_argument('-pseudo',
+                    help='pseudocount',
+                    type = int,
+                    default=20)
+
+args = parser.parse_args()
+
 
 ''' setting variables '''
-home_dir = '/home/asaha6/github/asenet'
-het_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/het.txt'
-bias_data_path = 'data/bias.txt'
-ref_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/ref.txt'
-alt_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/alt.txt'
+home_dir = args.home
+het_data_path = args.hetdata
+bias_data_path = args.biasdata
+ref_data_path = args.refdata
+alt_data_path = args.altdata
 
-ase_data_dest_path = 'results/ase_pseudo.txt'
-validity_data_dest_path ='results/ase_validity.txt'
+ase_data_dest_path = args.asedest
+validity_data_dest_path =args.validdest
 
-MIN_READS = 20
-PSEUDO_COUNT = 50
+MIN_READS = args.minreads
+PSEUDO_COUNT = args.pseudo
 
 # set working directory
 os.chdir(home_dir)
@@ -43,4 +80,5 @@ unbias_mat = np.matrix(unbias_list * ase_data.shape[0])
 unbias_mat = unbias_mat.reshape(ase_data.shape[0],ase_data.shape[1])
 ase_validity = het_data * (total_reads >= MIN_READS) * unbias_mat
 ase_validity.to_csv(validity_data_dest_path, sep='\t', index=True, header=False)
+
 
