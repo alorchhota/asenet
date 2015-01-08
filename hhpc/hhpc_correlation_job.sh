@@ -1,3 +1,4 @@
+#!/bin/sh
 homedir='/home/asaha6/github/asenet'
 outdir='results/TF-ASE-Correlation-2015-01-07'
 cd $homedir
