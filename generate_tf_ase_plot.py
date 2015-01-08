@@ -5,18 +5,46 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import argparse
+
+''' argument parsing '''
+print('parsing arguments ...')
+parser = argparse.ArgumentParser()
+parser.add_argument('-home',
+                    help='home directory',
+                    default='.', )
+parser.add_argument('-tfdata',
+                    help='path to TF expression data file.',
+                    default='data/tf_expr_data.txt')
+parser.add_argument('-validdata',
+                    help='path to validity data file. Only valid loci are included in the analysis.',
+                    default='data/ase_validity.txt')
+parser.add_argument('-asedata',
+                    help='path to ase data file.',
+                    default='data/ase.txt')
+parser.add_argument('-refdata',
+                    help='path to reference read counts data file.',
+                    default='/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/ref.txt')
+parser.add_argument('-altdata',
+                    help='path to alternate read counts data file.',
+                    default='/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/alt.txt')
+parser.add_argument('-plotdir',
+                    help='output dir to store plots.',
+                    default='results/fig')
+parser.add_argument('-sigdata',
+                    help='path to annotated significant tf-asesite pairs.',
+                    default='results/significant_tf_ase_bonferroni.txt')
+args = parser.parse_args()
 
 ''' setting variables '''
-abs_suffix = '' # '': ase = abs(#ref/#total - 0.5), '_nobas': ase = #ref/#total - 0.5
-home_dir = '/home/asaha6/github/asenet'
-tf_expr_data_path = 'data/tf_expr_data.txt'
-validity_data_path = 'data/ase_validity' + abs_suffix + '.txt'
-ase_data_path = 'data/ase' + abs_suffix + '.txt'
-ref_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/ref.txt'
-alt_data_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/alt.txt'
-test_statistics_path = 'results/TF-ASE-Correlation-2014-12-19/significant_tf_ase_bonferroni.txt'
-
-fig_dest_dir = 'results/TF-ASE-Correlation-2014-12-19/fig/'
+home_dir = args.home
+tf_expr_data_path = args.tfdata
+validity_data_path = args.validdata
+ase_data_path = args.asedata
+ref_data_path = args.refdata
+alt_data_path = args.altdata
+test_statistics_path = args.sigdata
+fig_dest_dir = args.plotdir
 
 # set working directory
 os.chdir(home_dir)
@@ -71,7 +99,7 @@ def drawPlot(tf, l, l_gene, r, p):
     #subplots[gi,gj].set_xlabel('TF: ' + tf)
     #subplots[gi,gj].set_ylabel('Locus: ' + l_gene + '(' + str(l)+')')
     #subplots[gi,gj].set_title('#AltReads vs TF Expression')
-    plt.savefig(fig_dest_dir + "/" + tf + "_" + str(l) + abs_suffix + ".png")
+    plt.savefig(fig_dest_dir + "/" + tf + "_" + str(l) + ".png")
     plt.close()
     return
 
@@ -122,3 +150,4 @@ for i in range(n):
     print(cor)
     drawPlot(tf, l, l_gene, r, p)
 '''
+

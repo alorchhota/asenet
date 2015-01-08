@@ -1,13 +1,33 @@
 import os
 import pandas as pd
+import argparse
+
+''' argument parsing '''
+print('parsing arguments ...')
+parser = argparse.ArgumentParser()
+parser.add_argument('-home',
+                    help='home directory',
+                    default='.', )
+parser.add_argument('-genannotdata',
+                    help='path to gencode annotation data (processed) file.',
+                    default='data/gencode.v19.annotation.processed.gtf')
+parser.add_argument('-lociannotdata',
+                    help='path to ase loci annotation data file.',
+                    default='/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/ase_locus_annot.txt')
+parser.add_argument('-sigdata',
+                    help='path to significant tf-asesite pairs.',
+                    default='results/test_statistics_fdr_bh.txt')
+parser.add_argument('-annotdest',
+                    help='output path to annotated tf-asesite pairs.',
+                    default='results/significant_tf_ase_fdr_bh.txt')
+args = parser.parse_args()
 
 ''' setting variables '''
-home_dir = '/home/asaha6/github/asenet'
-gencode_annot_path = 'data/gencode.v19.annotation.processed.gtf'
-ase_loc_path = '/scratch1/langmead-fs1/data/big_public_datasets/dgn/ase/ase_locus_annot.txt'
-
-significant_tfs_path = 'results/test_statistics_pseudo_2014-12-19_00-02-51_bonferroni.txt'
-annotated_significant_tfs_dest_path = 'results/significant_tf_ase_bonferroni.txt'
+home_dir = args.home
+gencode_annot_path = args.genannotdata
+ase_loc_path = args.lociannotdata
+significant_tfs_path = args.sigdata
+annotated_significant_tfs_dest_path = args.annotdest
 
 
 # set working directory
@@ -36,3 +56,4 @@ locus_genes = [gen_annot.get_gene_name_from_locus(
 print('saving significant tf with locus names ...')
 sig_tf_data['gene'] = locus_genes
 sig_tf_data.to_csv(path_or_buf=annotated_significant_tfs_dest_path, sep='\t', header=True, index=False)
+
