@@ -104,6 +104,7 @@ for chr in range(1, n_chr+1):
 print('saving annotations into file:' + annot_dest_path + ' ...')
 with open(annot_dest_path, 'w') as fh:
     text = '\n'.join([pair[0] + '\t' + str(int(pair[1])) for pair in zip(annotation, pseudoStatus)])
+    fh.write('gene\tpseudo\n')
     fh.write(text)
 
 print('Done!' )
