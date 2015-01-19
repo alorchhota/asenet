@@ -13,6 +13,7 @@ home_dir = '/home/asaha6/github/asenet'
 validity_data_path = 'data/ase_validity.txt'
 ase_data_path = 'data/ase.txt'
 sample_label_path = 'data/sample_labels.txt'
+MIN_VALID_SAMPLES = 30
 
 #statistic_dest_path = 'results/ase_biological_covariate_corr.txt'
 dest_fig_path = 'results/ase_distribution.png'
@@ -39,8 +40,11 @@ for locus_idx in range(ase_data.shape[1]):
     if locus_idx % 1000 == 0:
         print(str(locus_idx) + ' of ' + str(ase_data.shape[1]))
     valid_idx = np.where(validity_data.iloc[:,locus_idx]==1)[0]
+    if len(valid_idx) < MIN_VALID_SAMPLES:
+        continue
     ase_vals = ase_data.iloc[valid_idx,locus_idx]
-    valid_ase_vals = valid_ase_vals + list(ase_vals);
+    for v in ase_vals:
+        valid_ase_vals.append(v)
 
 print('creating histogram plots ...');
 h = plt.hist(valid_ase_vals, bins=100)
