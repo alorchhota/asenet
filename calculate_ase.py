@@ -33,8 +33,8 @@ parser.add_argument('-minreads',
                     default=20)
 parser.add_argument('-pseudo',
                     help='pseudocount',
-                    type = int,
-                    default=20)
+                    type = float,
+                    default=50.0)
 
 args = parser.parse_args()
 
@@ -50,7 +50,7 @@ ase_data_dest_path = args.asedest
 validity_data_dest_path =args.validdest
 
 MIN_READS = args.minreads
-PSEUDO_COUNT = args.pseudo
+PSEUDO_COUNT = args.pseudo + 0.0
 
 # set working directory
 os.chdir(home_dir)
@@ -69,7 +69,7 @@ print('calculating ase ...')
 delta = 0.01
 total_reads = ref_data + alt_data
 total_reads = total_reads.replace(0, delta) # to avoid division by zero
-ase_data = abs((ref_data+PSEUDO_COUNT) / (total_reads+2*PSEUDO_COUNT) - 0.5)
+ase_data = abs((ref_data+PSEUDO_COUNT) / (total_reads+2.0*PSEUDO_COUNT) - 0.5)
 
 print('saving ase data ...')
 ase_data.to_csv(ase_data_dest_path, sep='\t', index=True, header=False)
