@@ -56,3 +56,7 @@ docs/_build/
 data/
 results/
 
+# hhpc output
+hhpc/*.sh.e*
+hhpc/*.sh.o*
+hhpc/hhpc_out_*
