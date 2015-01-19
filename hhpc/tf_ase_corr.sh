@@ -1,14 +1,18 @@
 #!/bin/sh
 homedir='/home/asaha6/github/asenet'
-outdir='results/TF-ASE-Correlation-2015-01-07'
+outdir='results/TF-ASE-Correlation-2015-01-18-filtered-mono-allelic-expr'
 cd $homedir
+
+# create output directory structure
+mkdir $outdir
+mkdir $outdir/fig
 
 # calculating ase
 asedest='results/ase.txt'
 validdest='results/ase_validity.txt'
 minreads=20
 pseudo=50
-python calculate_ase.py -home $homedir -asedest $asedest -validdest $validdest -minreads $minreads -pseudo $pseudo
+python calculate_ase.py -home $homedir -asedest $asedest -validdest $validdest -minreads $minreads -pseudo $pseudo -monofilter
 
 # moving ase into the data folder
 asedata='data/ase.txt'
@@ -20,10 +24,6 @@ mv $validdest $validdata
 minsamples=30
 statdest=$outdir/test_statistics.txt
 python calculate_tf_ase_correlations.py -home $homedir -asedata $asedata -validdata $validdata -minsamples $minsamples -statdest $statdest
-
-# create output directory structure
-mkdir $outdir
-mkdir $outdir/fig
 
 # fdr correction
 statdata=$statdest

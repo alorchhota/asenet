@@ -35,6 +35,14 @@ parser.add_argument('-pseudo',
                     help='pseudocount',
                     type = float,
                     default=50.0)
+parser.add_argument("-monofilter",
+                    help="filter mono-allelic expression.",
+                    action="store_true")
+parser.add_argument('-monothresh',
+                    help='threshold rate (NonFrequentAllele/FrequentAllele) to declare mono-allelic expression.',
+                    type = float,
+                    default=0.02)
+
 
 args = parser.parse_args()
 
@@ -45,6 +53,8 @@ het_data_path = args.hetdata
 bias_data_path = args.biasdata
 ref_data_path = args.refdata
 alt_data_path = args.altdata
+mono_filter = args.monofilter
+mono_thresh = args.monothresh
 
 ase_data_dest_path = args.asedest
 validity_data_dest_path =args.validdest
@@ -66,7 +76,7 @@ ref_data = ref_data.loc[het_data.index, :]
 alt_data = alt_data.loc[het_data.index, :]
 
 print('calculating ase ...')
-delta = 0.01
+delta = 0.000001
 total_reads = ref_data + alt_data
 total_reads = total_reads.replace(0, delta) # to avoid division by zero
 ase_data = abs((ref_data+PSEUDO_COUNT) / (total_reads+2.0*PSEUDO_COUNT) - 0.5)
@@ -78,7 +88,14 @@ print('creating ase validity matrix ...')
 unbias_list = [1-row[1][0] for row in bias_data.iterrows()]
 unbias_mat = np.matrix(unbias_list * ase_data.shape[0])
 unbias_mat = unbias_mat.reshape(ase_data.shape[0],ase_data.shape[1])
-ase_validity = het_data * (total_reads >= MIN_READS) * unbias_mat
+
+if mono_filter:
+    allele_ratio = (ref_data + delta) / (alt_data + delta) # delta to avoid division by zero
+    valid_allele_ratio = (mono_thresh <= allele_ratio) & (allele_ratio <= (1.0/mono_thresh))
+else:
+    valid_allele_ratio = ref_data == ref_data # all 1 (valid)
+
+ase_validity = het_data * (total_reads >= MIN_READS) * unbias_mat * valid_allele_ratio
 ase_validity.to_csv(validity_data_dest_path, sep='\t', index=True, header=False)
 
 
